@@ -1,12 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
+
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>API Example</title>
 </head>
+
 <body>
-    <h1>첫 깃허브 페이지입니다.</h1>
+    <h1>API 연습장</h1>
+    <input type="text" id="bookName" name="bookName">
+    <input type="button" id="search" name="search" value="Search">
+    <p></p>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            
+            $("#search").click(function(){
+                $( "p" ).empty();
+
+                $.ajax({
+                method: "GET",
+                url: "https://dapi.kakao.com/v3/search/book?target=title",
+                data: { query: $("#bookName").val() },
+                headers: { Authorization: "KakaoAK cffcb258735d84f489386a4fe41a8a42" }
+                }).done(function (msg) {
+                    $( "p" ).append( "<strong>" + msg.documents[0].title + "</strong>" );
+                    $( "p" ).append( "<img src='" + msg.documents[0].thumbnail + "' /><br/>" );
+                    $( "p" ).append( "<strong>" + msg.documents[0].contents + "</strong><br/>" );
+
+                    $( "p" ).append( "<strong>" + msg.documents[1].title + "</strong>" );
+                    $( "p" ).append( "<img src='" + msg.documents[1].thumbnail + "' /><br/>" );
+                    $( "p" ).append( "<strong>" + msg.documents[1].contents + "</strong><br/>" );
+
+                    $( "p" ).append( "<strong>" + msg.documents[2].title + "</strong>" );
+                    $( "p" ).append( "<img src='" + msg.documents[2].thumbnail + "' /><br/>" );
+                    $( "p" ).append( "<strong>" + msg.documents[2].contents + "</strong><br/>" );
+                });
+            });
+
+        });
+        
+    </script>
 </body>
+
 </html>
