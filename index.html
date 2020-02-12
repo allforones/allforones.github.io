@@ -7,25 +7,99 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="icon" href="">
     <title>API Example</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* Style the header */
+        header {
+            background-color: #666;
+            padding: 30px;
+            text-align: center;
+            font-size: 35px;
+            color: white;
+        }
+
+        /* Container for flexboxes */
+        section {
+            display: -webkit-flex;
+            display: flex;
+        }
+
+        /* Style the navigation menu */
+        nav {
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            background: #ccc;
+            padding: 20px;
+        }
+
+        /* Style the list inside the menu */
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        /* Style the content */
+        article {
+            -webkit-flex: 7;
+            -ms-flex: 7;
+            flex: 7;
+            background-color: #f1f1f1;
+            padding: 10px;
+        }
+
+        /* Style the footer */
+        footer {
+            background-color: #777;
+            padding: 10px;
+            text-align: center;
+            color: white;
+        }
+
+        /* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
+        @media (max-width: 600px) {
+            section {
+                -webkit-flex-direction: column;
+                flex-direction: column;
+            }
+        }
+    </style>
+
 </head>
 
 <body>
-    <h1>API 연습장</h1>
-    <input type="text" id="bookName" name="bookName">
-    <input type="button" id="search" name="search" value="Search">
-    <p></p>
-    <table>
-        <thead>
-            <tr>
-                <th>1</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>2</td>
-            </tr>
-        </tbody>
-    </table>
+    <header>
+        <h2>Header</h2>
+    </header>
+
+    <section>
+        <nav>
+            <li><a href="#">Section1</a></li>
+            <li><a href="#">Section2</a></li>
+            <li><a href="#">Section3</a></li>
+        </nav>
+    
+        <article>
+            <h1>API 연습장</h1>
+            <input type="text" id="bookName" name="bookName">
+            <input type="button" id="search" name="search" value="Search">
+            <p></p>
+        </article>
+    </section>
+
+    <footer>
+        <h2>Footer</h2>
+    </footer>
+</body>
+
     <script src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script>
@@ -40,7 +114,7 @@
                 data: { query: $("#bookName").val() },
                 headers: { Authorization: "KakaoAK cffcb258735d84f489386a4fe41a8a42" }
                 }).done(function (msg) {
-                    console.log(msg.documents.length);
+                    console.log(msg);
                     for(let i = 0; i < msg.documents.length; i++) {
                         $( "p" ).append( "<strong>" + msg.documents[i].title + "</strong>" );
                         $( "p" ).append( "<img src='" + msg.documents[i].thumbnail + "' /><br/>" );
@@ -52,6 +126,5 @@
         });
         
     </script>
-</body>
 
 </html>
