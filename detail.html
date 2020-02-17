@@ -9,8 +9,20 @@
     <title>API Example_detail</title>
 </head>
 <body>
-    <h2>Detail</h2>
-    <div id="detailText"></div>
+    <header>
+        <div style="text-align: center;">
+            <h2>책 검색</h2>
+        </div>
+    </header>
+    <section style="width: 2200px; background: #000;">
+        <div style="width:100%;background: gray;">
+            <div style="position: absolute; left: 50%; margin-left: -420px;">
+                <div id="detailText"></div>
+                <div id="anotherBook1"></div>
+                <div id="anotherBook2"></div>
+            </div>
+        </div>
+    </section>
 </body>
 
 <script>
@@ -53,7 +65,7 @@
                     conText = data.documents[0].contents.substr(0, 80) + "...";
                 }
 
-                const html = "<div style='width:200px; height:400px; border: 1px solid black; float: left; margin: 10px; padding: 10px; text-align: center;'><img src='" + data.documents[0].thumbnail + "' /><br/><strong>" + data.documents[0].title + "</strong><br/>" + "<strong>" + conText + "</strong></div>";
+                const html = "<div style='width:800px; height:400px; border: 1px solid black; float: left; margin: 10px; padding: 10px; text-align: center;'><img src='" + data.documents[0].thumbnail + "' /><br/><strong>" + data.documents[0].title + "</strong><br/>" + "<strong>" + conText + "</strong></div>";
 
                 appendHtml(document.getElementById('detailText'), html);
                
