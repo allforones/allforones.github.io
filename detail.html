@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="">
+    <title>API Example_detail</title>
+</head>
+<body>
+    <h2>Detail</h2>
+    <div id="detailText"></div>
+</body>
+
+<script>
+    function getParam(sname) {
+        var params = location.search.substr(location.search.indexOf("?") + 1);
+        var sval = "";
+        params = params.split("&");
+
+        for (var i = 0; i < params.length; i++) {
+            temp = params[i].split("=");
+            if ([temp[0]] == sname) { sval = temp[1]; }
+        }
+
+        return sval;
+    }
+
+    function appendHtml(el, str) {
+        const div = document.createElement('div');
+        div.innerHTML = str;
+        while(div.children.length > 0){
+            el.appendChild(div.children[0]);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchUrl = 'https://dapi.kakao.com/v3/search/book?target=isbn&size=6&query=' + getParam('isbn');
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', searchUrl);
+        xhr.setRequestHeader( 'Content-Type', 'application/json;charset=UTF-8;' );
+        xhr.setRequestHeader( 'Authorization', 'KakaoAK cffcb258735d84f489386a4fe41a8a42' );
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4 && xhr.status === 200){
+                const data = JSON.parse(xhr.response);
+
+                console.log(data);
+
+                appendHtml(document.getElementById('detailText'), data);
+               
+                // let conText = "";
+                // if(data.documents.length > 0){
+                //     console.log(data);
+
+                //     for(let i = 0; i < data.documents.length; i++){
+                //         if(data.documents[i].contents.length > 80) {
+                //             conText = data.documents[i].contents.substr(0, 80) + "...";
+                //         }
+                //         const isbn = data.documents[i].isbn.trim();
+                //         let setIsbn = "";
+                //         if(isbn.indexOf(" ") !== -1) {
+                //             setIsbn = isbn.split(" ")[0];
+                //         } else {
+                //             setIsbn = isbn;
+                //         }
+
+                //         const html = "<div style='width:200px; height:400px; border: 1px solid black; float: left; margin: 10px; padding: 10px; text-align: center;' onclick='javascript:detailBook(" + setIsbn + ")'><img src='" + data.documents[i].thumbnail + "' /><br/><strong>" + data.documents[i].title + "</strong><br/>" + "<strong>" + conText + "</strong></div>";
+                //         appendHtml(document.getElementById('textDiv'), html);
+                //     }
+                // }
+            }
+        }
+        xhr.send();
+    
+    })
+
+</script>
+
+</html>
